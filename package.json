@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-modbus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "str"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arshiaKalkho/ModBus.git"
+  },
+  "author": "arshia a",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arshiaKalkho/ModBus/issues"
+  },
+  "homepage": "https://github.com/arshiaKalkho/ModBus#readme",
+  "dependencies": {
+    "influx": "^5.6.3",
+    "modbus": "^1.1.1",
+    "modbus-serial": "^8.0.1",
+    "serial": "0.0.9"
+  }
+}
