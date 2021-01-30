@@ -1,4 +1,4 @@
-//enter the influx db link second
+//enter the influx db link 
 const Influx = require('influx');
 const influx = new Influx.InfluxDB('http://user:password@host:8086/database')
 
