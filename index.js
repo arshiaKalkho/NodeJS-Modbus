@@ -1,6 +1,25 @@
 //enter the influx db link /////////////////////////////////
 const Influx = require('influx');
-const influx = new Influx.InfluxDB('http://user:password@host:8086/database')
+const client = new Influx.InfluxDB({
+  database: 'my_db',
+  host: 'localhost',
+  port: 8086,
+  username: 'connor',
+  password: 'pa$$w0rd',
+  schema: [
+    {
+      measurement: 'perf',
+      fields: {
+        memory_usage: Influx.FieldType.INTEGER,
+        cpu_usage: Influx.FieldType.FLOAT,
+        is_online: Influx.FieldType.BOOLEAN
+      },//, added
+      tags: [
+        'hostname'
+      ]
+    }
+  ]
+})
 
 
 const modbus = require('modbus')
@@ -14,8 +33,8 @@ let holdingRegisters;//holds date from the modbus
 //get data from the registers
 
 setInterval(function(){//this function reads registers every 2 mins puts them in holdingRegister variable
-device.readHoldingRegisters(0, 10).then(function (resp) {
-    console.log(resp.response._body.valuesAsArray)
+device.readHoldingRegisters(40069 , 40109).then(function (resp) {
+    //registers 40069 - 40109 are being read
     holdingRegisters = resp.response._body.valuesAsArray; 
     
   }).catch(function () {
@@ -24,14 +43,14 @@ device.readHoldingRegisters(0, 10).then(function (resp) {
       depth: null
   }))
      
-  })}, 120000);
+  })}, 120000);//2min intervals
  
 
 
 
 
 //send the data to influxdb
-influx.writePoints([
+client.writePoints([
     {
       measurement: 'tide',
       
@@ -40,7 +59,7 @@ influx.writePoints([
       tags: {
         unit: locationObj.rawtide.tideInfo[0].units,
         location: locationObj.rawtide.tideInfo[0].tideSite,
-      
+        
         },
       
       
@@ -48,13 +67,9 @@ influx.writePoints([
       timestamp: tidePoint.epoch,
     
     }
-  ]
-
-  
-  ,{
+ ],{
     database: 'ocean_tides',
     precision: 's',
-
   })
   .catch(error => {
     console.error(`Error saving data to InfluxDB! ${err.stack}`)
