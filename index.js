@@ -10,9 +10,49 @@ const client = new Influx.InfluxDB({
     {
       measurement: 'perf',
       fields: {
+        /*
         memory_usage: Influx.FieldType.INTEGER,
         cpu_usage: Influx.FieldType.FLOAT,
         is_online: Influx.FieldType.BOOLEAN
+        */
+        C_SunSpec_DID   : Influx.FieldType.FLOAT, 
+        C_SunSpec_Length: Influx.FieldType.FLOAT,
+        I_AC_Current    : Influx.FieldType.FLOAT,
+        I_AC_CurrentA   : Influx.FieldType.FLOAT,
+        I_AC_CurrentB   : Influx.FieldType.FLOAT,
+        I_AC_CurrentC   : Influx.FieldType.FLOAT,
+        I_AC_Current_SF : Influx.FieldType.FLOAT,
+        I_AC_VoltageAB  : Influx.FieldType.FLOAT,
+        I_AC_VoltageBC  : Influx.FieldType.FLOAT,
+        I_AC_VoltageCA  : Influx.FieldType.FLOAT,
+        I_AC_VoltageAN  : Influx.FieldType.FLOAT,
+        I_AC_VoltageBN  : Influx.FieldType.FLOAT,
+        I_AC_VoltageCN  : Influx.FieldType.FLOAT,
+        I_AC_Voltage_SF : Influx.FieldType.FLOAT,
+        I_AC_Power      : Influx.FieldType.FLOAT,
+        I_AC_Power_SF   : Influx.FieldType.FLOAT,
+        I_AC_Frequency  : Influx.FieldType.FLOAT,
+        I_AC_Frequency_SF: Influx.FieldType.FLOAT,
+        I_AC_VA         : Influx.FieldType.FLOAT,
+        I_AC_VA_SF      : Influx.FieldType.FLOAT,
+        I_AC_VAR        : Influx.FieldType.FLOAT,
+        I_AC_VAR_SF     : Influx.FieldType.FLOAT,
+        I_AC_PF         : Influx.FieldType.FLOAT,
+        I_AC_PF_SF      : Influx.FieldType.FLOAT,
+        I_AC_Energy_WH  : Influx.FieldType.FLOAT,
+        I_AC_Energy_WH_SF: Influx.FieldType.FLOAT,
+        I_DC_Current    : Influx.FieldType.FLOAT,
+        I_DC_Current_SF : Influx.FieldType.FLOAT,
+        I_DC_Voltage    : Influx.FieldType.FLOAT,
+        I_DC_Voltage_SF : Influx.FieldType.FLOAT,
+        I_DC_Power      : Influx.FieldType.FLOAT,
+        I_DC_Power_SF   : Influx.FieldType.FLOAT,
+        I_Temp_Sink     : Influx.FieldType.FLOAT,
+        I_Temp_SF       : Influx.FieldType.FLOAT,
+        I_Status        : Influx.FieldType.FLOAT,
+        I_Status_Vendor : Influx.FieldType.FLOAT,
+
+        
       },//, added
       tags: [
         'hostname'
@@ -29,6 +69,7 @@ const device = modbus(ipAddress,port,unitId)
 
 let holdingRegisters;//holds date from the modbus
 
+ 
 
 //get data from the registers
 
