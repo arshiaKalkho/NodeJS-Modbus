@@ -1,20 +1,18 @@
-//enter the influx db link /////////////////////////////////
+//enter the influx db link 
 const Influx = require('influx');
 const client = new Influx.InfluxDB({
-  database: 'my_db',
-  host: 'localhost',
-  port: 8086,
-  username: 'connor',
-  password: 'pa$$w0rd',
+// this function connects to the DB and cretes a custom schema
+  
+  database: 'seneca',
+  host: '104.232.201.4',
+  port: 3000,
+  username: 'volpowadmin',
+  password: '<9AkR&2}​​​​​​​​BDUC;Rqu',
   schema: [
     {
       measurement: 'perf',
-      fields: {
-        /*
-        memory_usage: Influx.FieldType.INTEGER,
-        cpu_usage: Influx.FieldType.FLOAT,
-        is_online: Influx.FieldType.BOOLEAN
-        */
+      fields: {//custom schema
+        
         C_SunSpec_DID   : Influx.FieldType.FLOAT, 
         C_SunSpec_Length: Influx.FieldType.FLOAT,
         I_AC_Current    : Influx.FieldType.FLOAT,
@@ -67,15 +65,15 @@ const device = modbus(ipAddress,port,unitId)
 
  
 
-let holdingRegisters;//holds date from the modbus
+let holdingRegisters = {};//holds date from the modbus
 
  
 
 //get data from the registers
 
 setInterval(function(){//this function reads registers every 2 mins puts them in holdingRegister variable
-device.readHoldingRegisters(40069 , 40109).then(function (resp) {
-    //registers 40069 - 40109 are being read
+device.readHoldingRegisters(40069 , 40108).then(function (resp) {
+    //registers 40069 - 40109 are being read 
     holdingRegisters = resp.response._body.valuesAsArray; 
     
   }).catch(function () {
