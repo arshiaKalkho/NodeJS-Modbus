@@ -3,11 +3,11 @@ const Influx = require('influx');
 const client = new Influx.InfluxDB({
 // this function connects to the DB and cretes a custom schema
   
-  database: 'seneca',
-  host: '104.232.201.4',
-  port: 3000,
-  username: 'volpowadmin',
-  password: '<9AkR&2}​​​​​​​​BDUC;Rqu',
+  database: ' ',
+  host: ' ',
+  port: 1 ,
+  username: ' ',
+  password: ' ',
   schema: [
     {
       measurement: 'perf',
@@ -92,22 +92,56 @@ device.readHoldingRegisters(40069 , 40108).then(function (resp) {
 client.writePoints([
     {
       measurement: 'tide',
-      
-      
-      
       tags: {
-        unit: locationObj.rawtide.tideInfo[0].units,
-        location: locationObj.rawtide.tideInfo[0].tideSite,
-        
-        },
-      
-      
-      fields: { height: tidePoint.height },
-      timestamp: tidePoint.epoch,
+        /*unit: locationObj.rawtide.tideInfo[0].units,
+        location: locationObj.rawtide.tideInfo[0].tideSite,*/
+
+      },      
+      fields: {     // filling the data into the data base schema 
+        C_SunSpec_DID   : holdingRegisters[0], 
+        C_SunSpec_Length: holdingRegisters[1],
+        I_AC_Current    : holdingRegisters[2],
+        I_AC_CurrentA   : holdingRegisters[3],
+        I_AC_CurrentB   : holdingRegisters[4],
+        I_AC_CurrentC   : holdingRegisters[5],
+        I_AC_Current_SF : holdingRegisters[6],
+        I_AC_VoltageAB  : holdingRegisters[7],
+        I_AC_VoltageBC  : holdingRegisters[8],
+        I_AC_VoltageCA  : holdingRegisters[9],
+        I_AC_VoltageAN  : holdingRegisters[10],
+        I_AC_VoltageBN  : holdingRegisters[11],
+        I_AC_VoltageCN  : holdingRegisters[12],
+        I_AC_Voltage_SF : holdingRegisters[13],
+        I_AC_Power      : holdingRegisters[14],
+        I_AC_Power_SF   : holdingRegisters[15],
+        I_AC_Frequency  : holdingRegisters[16],
+        I_AC_Frequency_SF: holdingRegisters[17],
+        I_AC_VA         : holdingRegisters[18],
+        I_AC_VA_SF      : holdingRegisters[19],
+        I_AC_VAR        : holdingRegisters[20],
+        I_AC_VAR_SF     : holdingRegisters[21],
+        I_AC_PF         : holdingRegisters[22],
+        I_AC_PF_SF      : holdingRegisters[23],
+        I_AC_Energy_WH  : holdingRegisters[24],
+        I_AC_Energy_WH_SF: holdingRegisters[25],
+        I_DC_Current    : holdingRegisters[26],
+        I_DC_Current_SF : holdingRegisters[27],
+        I_DC_Voltage    : holdingRegisters[28],
+        I_DC_Voltage_SF : holdingRegisters[29],
+        I_DC_Power      : holdingRegisters[30],
+        I_DC_Power_SF   : holdingRegisters[31],
+        I_Temp_Sink     : holdingRegisters[32],
+        I_Temp_SF       : holdingRegisters[33],
+        I_Status        : holdingRegisters[34],
+        I_Status_Vendor : holdingRegisters[35],
+
+
+      },
+      timestamp: getLastRecordedTime(),// add a time stamp 
     
     }
  ],{
-    database: 'ocean_tides',
+    database: 'seneca',//might wanna change this name
     precision: 's',
   })
   .catch(error => {
