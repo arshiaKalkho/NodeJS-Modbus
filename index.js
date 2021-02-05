@@ -3,11 +3,11 @@ const Influx = require('influx');
 const client = new Influx.InfluxDB({
 // this function connects to the DB and cretes a custom schema
   
-  database: 'seneca',
-  host: '104.232.201.4',
+  database: '',
+  host: '',
   port: 8086,
-  username: 'volpowadmin',
-  password: '<9AkR&2}​​​​​​​​BDUC;Rqu',
+  username: '',
+  password: '',
   schema: [
     {
       measurement: 'perf',
@@ -61,7 +61,7 @@ const client = new Influx.InfluxDB({
 
 
 const modbus = require('modbus')                                      ///////////////
-const device = modbus("104.232.201.4",3000,)                          /////////////// fill
+const device = modbus()                          /////////////// fill
                                                                       
 
  
