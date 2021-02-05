@@ -3,11 +3,11 @@ const Influx = require('influx');
 const client = new Influx.InfluxDB({
 // this function connects to the DB and cretes a custom schema
   
-  database: ' ',
-  host: ' ',
-  port: 1 ,
-  username: ' ',
-  password: ' ',
+  database: 'seneca',
+  host: '104.232.201.4',
+  port: 8086,
+  username: 'volpowadmin',
+  password: '<9AkR&2}​​​​​​​​BDUC;Rqu',
   schema: [
     {
       measurement: 'perf',
@@ -53,15 +53,16 @@ const client = new Influx.InfluxDB({
         
       },//, added
       tags: [
-        'hostname'
+        'seneca'                    //not sure
       ]
     }
   ]
 })
 
 
-const modbus = require('modbus')
-const device = modbus(ipAddress,port,unitId)
+const modbus = require('modbus')                                      ///////////////
+const device = modbus("104.232.201.4",3000,)                          /////////////// fill
+                                                                      
 
  
 
@@ -72,7 +73,7 @@ let holdingRegisters = {};//holds date from the modbus
 //get data from the registers
 
 setInterval(function(){//this function reads registers every 2 mins puts them in holdingRegister variable
-device.readHoldingRegisters(40069 , 40108).then(function (resp) {
+device.readHoldingRegisters(69 , 108).then(function (resp) {
     //registers 40069 - 40109 are being read 
     holdingRegisters = resp.response._body.valuesAsArray; 
     
@@ -91,17 +92,17 @@ device.readHoldingRegisters(40069 , 40108).then(function (resp) {
 //send the data to influxdb
 client.writePoints([
     {
-      measurement: 'tide',
+      measurement: 'perf',
       tags: {
         /*unit: locationObj.rawtide.tideInfo[0].units,
         location: locationObj.rawtide.tideInfo[0].tideSite,*/
 
       },      
-      fields: {     // filling the data into the data base schema 
-        C_SunSpec_DID   : holdingRegisters[0], 
-        C_SunSpec_Length: holdingRegisters[1],
-        I_AC_Current    : holdingRegisters[2],
-        I_AC_CurrentA   : holdingRegisters[3],
+      fields: {     // filling the data into the data base schema
+        C_SunSpec_DID   : holdingRegisters[0], // assigning value to the each field from the array holdingRegisters ||
+        C_SunSpec_Length: holdingRegisters[1],                                    //                                \/
+        I_AC_Current    : holdingRegisters[2],                                                              
+        I_AC_CurrentA   : holdingRegisters[3],                                                              
         I_AC_CurrentB   : holdingRegisters[4],
         I_AC_CurrentC   : holdingRegisters[5],
         I_AC_Current_SF : holdingRegisters[6],
@@ -137,11 +138,11 @@ client.writePoints([
 
 
       },
-      timestamp: getLastRecordedTime(),// add a time stamp 
+      timestamp: new Date.now(),// add a time stamp 
     
     }
  ],{
-    database: 'seneca',//might wanna change this name
+    database: 'seneca',                     //might wanna change this name
     precision: 's',
   })
   .catch(error => {
